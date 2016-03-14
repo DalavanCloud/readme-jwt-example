@@ -86,7 +86,12 @@ app.post('/login',
   })
 );
 
-
+app.get('/docs', isAuthenticated, (req, res) => {
+  // Populate readme URL w/ auth_token
+  res.render('docs', {
+    readmeURL: '/sup'
+  });
+});
 
 app.listen(
   app.get('port'),
@@ -94,3 +99,11 @@ app.listen(
     console.log(`ReadMe customer server listening on port ${app.get('port')}`);
   }
 );
+
+function isAuthenticated (req, res, next) {
+  if (req.user) {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+}

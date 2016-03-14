@@ -13,5 +13,9 @@ block content
 			a.btn.btn-primary(href='/login') Login
 	div.row
 		h1 ReadMe JWT Auth Example
-		h2 Message: #{message}
+		h2 Hello: #{message}
+
+	div.row
+		if user
+			a(href='/docs') Docs
 
