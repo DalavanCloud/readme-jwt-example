@@ -1,0 +1,14 @@
+extends layout
+
+block title
+	title Login
+
+block content
+	form(action='login', method='post')
+		div.form-group
+			label(for='email') Email
+			input#email.form-control(type='text', placeholder='you@example.com', name='email')
+		div.form-group
+			label(for='password') Password
+			input#password.form-control(type='password', name='password')
+		button.btn.btn-default(type='submit') Login

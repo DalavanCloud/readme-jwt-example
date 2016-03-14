@@ -20,12 +20,68 @@ app.use(session({
   saveUninitialized: true
 }));
 
+passport.serializeUser(
+  (user, done) => {
+    done(null, user.id);
+  }
+);
+
+passport.deserializeUser(
+  (id, done) => {
+    if (id in USERS.ids) {
+      done(null, USERS.ids[id]);
+    } else {
+      done(`No user with id ${id}`);
+    }
+  }
+);
+
+
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password'
+    },
+    (username, password, done) => {
+      const userID = USERS.emails[username];
+      if (userID !== undefined) {
+        const user = USERS.ids[userID];
+        if (user.password === password) {
+          console.log('correct password, logged in');
+          return done(null, user);
+        } else {
+          return done(null, false, { message: 'incorrect password'});
+        }
+      } else {
+        return done(null, false, { message: 'incorrect username'});
+      }
+    }
+  )
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get('/', (req, res) => {
-  console.log(USERS.ids['1'].email);
   res.render('index', {
+    user: req.user,
     message: 'world'
   })
 });
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  })
+);
+
+
 
 app.listen(
   app.get('port'),
