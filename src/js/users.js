@@ -3,6 +3,7 @@ export const USERS = {
     "1": {
       "id": "1",
       "email": "jwt-jedi@gmail.com",
+      "name": "JWT Jedi",
       "password": "fn2187"
     }
   },

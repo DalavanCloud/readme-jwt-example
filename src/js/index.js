@@ -3,12 +3,14 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import { sign } from 'jsonwebtoken';
+import uuid from 'node-uuid';
 
 import { USERS } from './users';
 
 const app = express();
 
-app.set('port', process.env.EXPRESS_PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 app.set('views', `${__dirname}/../views`);
 app.set('view engine', 'jade');
 
@@ -87,9 +89,20 @@ app.post('/login',
 );
 
 app.get('/docs', isAuthenticated, (req, res) => {
+  const jwtPayload = {
+    email: req.user.email,
+    name: req.user.name
+  };
+  const jwtOptions = {
+    jwtid: uuid.v4()
+  };
+
+  const jwt = sign(jwtPayload, process.env.README_JWT_SECRET, jwtOptions);
+  console.log(`ReadMe docs JWT: ${jwt}`);
+
   // Populate readme URL w/ auth_token
   res.render('docs', {
-    readmeURL: '/sup'
+    readmeURL: `${process.env.README_PROJECT_URL}?auth_token=${jwt}`
   });
 });
 
