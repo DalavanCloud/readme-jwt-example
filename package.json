@@ -4,6 +4,7 @@
   "description": "Sample Implementation of JWT auth for a ReadMe",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
