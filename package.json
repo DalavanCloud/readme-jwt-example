@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "gulp watch",
     "build": "gulp build",
-    "start": "node dist/js/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/js/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +20,7 @@
   "homepage": "https://github.com/swarajban/readme-jwt-auth#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",

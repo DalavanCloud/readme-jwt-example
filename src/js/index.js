@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+import 'babel-polyfill';
 import express from 'express';
 import session from 'express-session';
 import bodyParser from 'body-parser';
@@ -66,6 +70,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
+  console.log('GET /');
   res.render('index', {
     user: req.user,
     message: 'world'
@@ -73,10 +78,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+  console.log('GET /login');
   res.render('login');
 });
 
 app.get('/logout', (req, res) => {
+  console.log('GET /logout');
   req.logout();
   res.redirect('/');
 });
@@ -89,6 +96,7 @@ app.post('/login',
 );
 
 app.get('/docs', isAuthenticated, (req, res) => {
+  console.log('GET /docs');
   const jwtPayload = {
     email: req.user.email,
     name: req.user.name
