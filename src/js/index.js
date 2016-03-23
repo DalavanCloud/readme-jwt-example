@@ -102,6 +102,7 @@ app.get('/docs', isAuthenticated, (req, res) => {
     name: req.user.name
   };
   const jwtOptions = {
+    audience: 'readme.io',
     jwtid: uuid.v4()
   };
 
